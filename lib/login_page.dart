@@ -1,0 +1,64 @@
+import 'package:flutter/material.dart';
+import 'components/custom_textfield.dart';
+
+class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
+
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  TextEditingController txtUsername = TextEditingController();
+  TextEditingController txtPassword = TextEditingController();
+  String statusLogin = "";
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text("Login page")), // Ini attribute dari scaffold
+      body: Column(
+        children: [
+          Text(
+            "Welcome to application"+statusLogin.toString(),
+            style: TextStyle(fontSize: 20,
+            color:Colors.blue,
+            fontStyle: FontStyle.italic
+            ),
+          ),
+          Container(
+            child: CustomTextfield(
+              txtController: txtUsername,
+              myHint: "input username",
+            )
+          ),
+          Container(
+            child: TextField(controller: txtPassword, decoration: InputDecoration(hint: Text("input password"))
+            )
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ElevatedButton(
+                onPressed: () {
+                setState(()
+                {
+                String username = txtUsername.text.toString();
+                String password= txtPassword.text.toString();
+                if(username == "admin" && password == "admin"){
+                  print("sukses login");
+                  statusLogin = "admin";
+                }else {
+                  print("login gagal");
+                  statusLogin = "failed";
+                }
+                });
+              }, child: Text("Login")),
+              ElevatedButton(onPressed: () {}, child: Text("Register")),
+            ],
+          )
+          ],
+        )
+      
+    );
+  }
+}
