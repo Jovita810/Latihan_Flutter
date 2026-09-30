@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:latihan_flutter/kalkulator_page.dart';
+import 'package:latihan_flutter/routes.dart';
 import 'login_page.dart';
 import 'pages/login_clone_page.dart';
 import 'pages/kalkulator2_page.dart';
@@ -15,7 +16,11 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(home: Kalkulator2Page());
+    return GetMaterialApp(
+      title: "My Learning App",
+      initialRoute: Routes.registration,
+      getPages: Routes.myPages,
+    );
   }
   // @override
   // Widget build(BuildContext context) {
