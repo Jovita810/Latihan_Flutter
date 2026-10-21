@@ -1,45 +1,41 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:latihan_flutter/components/custom_button.dart';
+import 'package:latihan_flutter/controller/confirm_reg_controller.dart';
 
 class ConfirmRegPage extends StatelessWidget {
-  const ConfirmRegPage({super.key});
+
+  final controller = Get.put(ConfirmRegController());
 
   @override
   Widget build(BuildContext context) {
-    final arguments = Get.arguments;
-    final String nama = arguments['name'];
-    final String alamat= arguments['alamat'];
-    final String email= arguments['email'];
-    final String noWA= arguments['no_wa'];
-    final String jenisKelamin = arguments['jenis_kelamin'];
 
     return Scaffold(
       appBar: AppBar(title: Text("Confirm Registration")),
       body: Column(
         children: [
           Text(
-            "Nama: " + nama,
+            "Nama: " + controller.nama,
             style: TextStyle(fontSize: 21, color: Colors.black),
           ),
           
           Text(
-            "Alamat: " + alamat,
+            "Alamat: " + controller.alamat,
             style: TextStyle(fontSize: 21, color: Colors.black),
           ),
 
           Text(
-            "Email: " + email,
+            "Email: " + controller.email,
             style: TextStyle(fontSize: 21, color: Colors.black),
           ),
 
           Text(
-            "No wa: " + noWA,
+            "No wa: " + controller.noWA,
             style: TextStyle(fontSize: 21, color: Colors.black),
           ),
 
           Text(
-            "Jenis kelamin :" + jenisKelamin,
+            "Jenis kelamin: " + controller.jenisKelamin,
             style: TextStyle(fontSize: 21, color: Colors.black),
           ),
 
