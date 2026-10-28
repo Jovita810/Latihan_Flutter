@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:latihan_flutter/controller/list_makanan_controller.dart';
-import 'package:latihan_flutter/pages/detail_makanan_page.dart';
+import 'package:latihan_flutter/menu/menu_drawer.dart';
 
 class HomePage extends StatelessWidget {
   final controller = Get.put(ListMakananController());
@@ -9,7 +9,17 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-    appBar: AppBar(title: Text("Ini home page"),),
+    // appBar: AppBar(
+    //   leading: Builder(
+    //     builder: (context) => IconButton(
+    //       icon: Icon(Icons.menu),
+    //       onPressed: () {
+    //         Scaffold.of(context).openDrawer();
+    //       },
+    //     ),
+    //   ),
+    //   title: Text("Ini home page"),
+    // ),
       body: Container(
         margin: EdgeInsets.all(10),
         height: 180,
