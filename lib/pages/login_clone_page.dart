@@ -15,20 +15,28 @@
 
    import 'package:flutter/material.dart';
    import 'package:flutter_svg/flutter_svg.dart';
+   import 'package:get/get.dart';
    import '../components/custom_textfield.dart';
    import '../components/custom_button.dart';
+   import 'package:latihan_flutter/controller/login_clone_controller.dart';
 
-class LoginClonePage extends StatefulWidget {
-  const LoginClonePage({super.key});
 
-  @override
-  State<LoginClonePage> createState() => _LoginClonePageState();
-}
+class LoginClonePage extends StatelessWidget {
+  LoginClonePage({super.key});
 
-class _LoginClonePageState extends State<LoginClonePage> {
-  bool rememberMe = false;
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
+  final controller = Get.put(LoginCloneController());
+
+//   @override
+//   State<LoginClonePage> createState() => _LoginClonePageState();
+// }
+
+// class _LoginClonePageState extends State<LoginClonePage> {
+//   bool rememberMe = false;
+
+  //final controller = Get.find<LoginCloneController>(); ///
+
+  // final TextEditingController emailController = TextEditingController();
+  // final TextEditingController passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -65,14 +73,16 @@ class _LoginClonePageState extends State<LoginClonePage> {
               SizedBox(height: 20),
 
               CustomTextfield(
-                txtController: emailController,
+                //txtController: emailController,
+                txtController: controller.txtUsername,
                 myHint: "Email or Phone",
               ),
               
               SizedBox(height: 19),
 
               CustomTextfield(
-                txtController: passwordController,
+                //txtController: passwordController,
+                txtController: controller.txtPassword,
                 myHint: "Password",
               ),
 
@@ -86,42 +96,47 @@ class _LoginClonePageState extends State<LoginClonePage> {
                 ),
               ),
 
-              Row(
-                children: [
-                  Checkbox(
-                    value: rememberMe,
-                    onChanged: (bool? newValue) {
-                    setState(() {
-                    rememberMe = newValue!;
-                    });
-                   },
-                  ),
+              // Row(
+              //   children: [
+              //     Checkbox(
+              //       value: rememberMe,
+              //       onChanged: (bool? newValue) {
+              //       setState(() {
+              //       rememberMe = newValue!;
+              //       });
+              //      },
+              //     ),
 
-                  Text(
-                    "Remember me. ",
-                    style: TextStyle(fontSize: 15,
-                    ),
-                  ),
+              //     Text(
+              //       "Remember me. ",
+              //       style: TextStyle(fontSize: 15,
+              //       ),
+              //     ),
                   
-                  Text(
-                    "Learn More",
-                    style: TextStyle(fontSize: 15,
-                    color: Color.fromRGBO(58, 96, 183, 1),
-                    fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
-              ),
+              //     Text(
+              //       "Learn More",
+              //       style: TextStyle(fontSize: 15,
+              //       color: Color.fromRGBO(58, 96, 183, 1),
+              //       fontWeight: FontWeight.bold,
+              //       ),
+              //     ),
+              //   ],
+              // ),
               
               Center(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
 
-                    CustomButton(
+                    Obx(
+                      () => controller.isLoading.value ? Center(child: CircularProgressIndicator(),) : CustomButton(
                       myButtonText: "Sign in",
-                      onTap: () {},
+                      onTap: () {
+                        controller.login();
+                      },
+                      ),
                     ),
+
                     SizedBox(height: 9),
 
                     Row(
