@@ -1,10 +1,10 @@
 import 'dart:convert';
 
+import 'package:latihan_flutter/models/login_model.dart';
+import 'package:latihan_flutter/pages/main_menu_page.dart'; // ADDED
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import 'package:latihan_flutter/menu/home_page.dart';
-import 'package:latihan_flutter/pages/main_menu_page.dart';
 
 class LoginCloneController extends GetxController{
 
@@ -13,38 +13,54 @@ class LoginCloneController extends GetxController{
 
   var isLoading = false.obs;
 
+  var loginModel = Rxn<LoginModel>();
+
+  // method hit API
   void login() async{
     if(txtUsername.text.toString().isEmpty || txtPassword.text.toString().isEmpty){
       Get.snackbar("error", "username dan password harus terisi");
     }else{
-      try{
-        isLoading.value = true;
-        final url = Uri.parse("https://mediadwi.com/api/latihan/login");
-      
-      // Proses hit API
-      final response = await http.post(url, body: {
-        "username" : txtUsername.text.toString(),
-        "password" : txtPassword.text.toString()
-      });
 
-      isLoading.value = false;
-      if(response.statusCode == 200){
-        final data = jsonDecode(response.body);
-        if(data['status'] == true){
-          // String status = data['message']
-          Get.snackbar("berhasil", data['message']);
-          Get.off(() => MainMenuPage());
+      try {
+        
+        isLoading.value = true; // sebagai tanda di page nya muncul loading widget
+        final url = Uri.parse("https://mediadwi.com/api/latihan/login");
+
+        final response = await http.post(url, body: {
+          "username" : txtUsername.text.toString(),
+          "password" : txtPassword.text.toString()
+        });
+
+        isLoading.value = false;
+        if(response.statusCode == 200){
+          // kita ambil jsonnya message pindah tampilan ke main menu
+          // contoh json yang paling sederhana, next pertemuan json yang kompleks
+          loginModel.value = loginModelFromJson(response.body);
+          
+          if(loginModel.value?.status == true){
+            Get.snackbar("berhasil", loginModel.value!.message.toString());
+            Get.off(() => MainMenuPage());
+            // pindah ke main menu
+            // get.off karena login nya di close
+            // carilah satu free api (sport db) yang return nya adalah json array
+            // di push ke git jam 10.30 
+          }else{
+            Get.snackbar("gagal", loginModel.value!.message.toString());
+          }
+
         }else{
-          Get.snackbar("gagal", data['message']);
+          Get.snackbar("gagal", "cek internet connection");
         }
-      }else{
-        Get.snackbar("gagal", "cek koneksi internet");
-      }
-      
+
+
+
       } catch (e) {
         Get.snackbar("gagal", e.toString());
-        print("error nya"+e.toString());
+        print("error nya "+e.toString());
       }
+
     }
   }
+
+  
 }

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:latihan_flutter/controller/list_makanan_controller.dart';
+import 'package:latihan_flutter/controller/team_controller.dart';
 import 'package:latihan_flutter/menu/menu_drawer.dart';
 
 class HomePage extends StatelessWidget {
-  final controller = Get.put(ListMakananController());
+  //final controller = Get.put(ListMakananController());
+  final controller = Get.put(TeamController());
 
   @override
   Widget build(BuildContext context) {
@@ -26,9 +28,11 @@ class HomePage extends StatelessWidget {
         child: Obx(
             () => ListView.builder(
             scrollDirection: Axis.horizontal,
-            itemCount: controller.listMakanan.length,
+            //itemCount: controller.listMakanan.length,
+            itemCount: controller.listTeam.length,
             itemBuilder: (context, index){
-              final makanan = controller.listMakanan[index];
+              //final makanan = controller.listMakanan[index];
+              final team = controller.listTeam[index];
                 return SizedBox( 
                   width: 140,
                   child: Card( 
@@ -37,14 +41,17 @@ class HomePage extends StatelessWidget {
                       child: Column( 
                         children: [
                           Image.network( 
-                            makanan.gambarMakanan,
+                            //makanan.gambarMakanan,
+                            team.gambarTeam,
                             height: 100,
                             width: 120,
-                            fit: BoxFit.cover,
+                            //fit: BoxFit.cover,
+                            fit: BoxFit.contain,
                           ),
                           SizedBox(height: 8), 
                           Text(
-                            makanan.namaMakanan,
+                            //makanan.namaMakanan,
+                            team.namaTeam,
                             textAlign: TextAlign.center, 
                             style: TextStyle(
                               fontSize: 16, 
